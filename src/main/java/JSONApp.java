@@ -34,10 +34,24 @@ public class JSONApp {
         System.out.println(json.toJson());
     }
 
+    private static JsonObject createCourseJsonObj(String course, Integer mark, Boolean passed) {
+        return new JsonObject(
+            new JsonPair("course", new JsonString(course)),
+            new JsonPair("mark", new JsonNumber(mark)),
+            new JsonPair("passed", new JsonBoolean(passed))
+        );
+    }
 
     public static JsonObject sessionResult() {
-        JsonObject jsonObject = null;
-        // ToDo
-        return jsonObject;
+        JsonPair name = new JsonPair("name", new JsonString("Andrii"));
+        JsonPair surname = new JsonPair("surname", new JsonString("Rodionov"));
+        JsonPair year = new JsonPair("year", new JsonNumber(2));
+        JsonPair exams = new JsonPair("exams", new JsonArray(
+                createCourseJsonObj("OOP", 3, true),
+                createCourseJsonObj("English", 5, true),
+                createCourseJsonObj("Math", 2, false)
+        ));
+
+        return new JsonObject(name, surname, year, exams);
     }
 }
