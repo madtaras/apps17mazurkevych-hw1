@@ -48,13 +48,31 @@ public class JsonObject extends Json {
         if (shouldPairBeAdded) collection.add(jsonPair);
     }
 
+    public boolean contains(String name) {
+        for (JsonPair pair : collection) {
+            if (pair.key.equals(name)) return true;
+
+        }
+        return false;
+    }
+
     public Json find(String name) {
-        // ToDo
+        for (JsonPair pair : collection) {
+            if (pair.key.equals(name)) return pair.value;
+
+        }
         return null;
     }
 
     public JsonObject projection(String... names) {
-        // ToDo
-        return null;
+        JsonObject result = new JsonObject();
+
+        for (String name: names) {
+            if (this.contains(name)) {
+                result.add(new JsonPair(name, this.find(name)));
+            }
+        }
+
+        return result;
     }
 }
