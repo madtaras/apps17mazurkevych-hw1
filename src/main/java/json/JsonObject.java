@@ -1,7 +1,6 @@
 package json;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 /**
  * Created by Andrii_Rodionov on 1/3/2017.
@@ -11,7 +10,9 @@ public class JsonObject extends Json {
 
     public JsonObject(JsonPair... jsonPairs) {
         collection = new ArrayList<>();
-        Collections.addAll(collection, jsonPairs);
+        for (JsonPair pair: jsonPairs) {
+            this.add(pair);
+        }
     }
 
     @Override
@@ -35,7 +36,16 @@ public class JsonObject extends Json {
     }
 
     public void add(JsonPair jsonPair) {
-        // ToDo
+        Boolean shouldPairBeAdded = true;
+
+        for (int i = 0, k = collection.size(); i < k; i++) {
+            if (jsonPair.key.equals(collection.get(i).key)) {
+                collection.set(i, jsonPair);
+                shouldPairBeAdded = false;
+            }
+        }
+
+        if (shouldPairBeAdded) collection.add(jsonPair);
     }
 
     public Json find(String name) {
